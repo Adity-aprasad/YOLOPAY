@@ -1,0 +1,416 @@
+
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+  Image,
+  SafeAreaView,
+  Dimensions,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+
+const { width } = Dimensions.get('window');
+
+const YoloPlay = () => {
+    const [selectedMode, setSelectedMode] = useState('card');
+    const [showCVV, setShowCVV] = useState(false);
+    const [isFrozen, setIsFrozen] = useState(false);
+  
+    return (
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#000" />
+
+  
+        {/* Main Content */}
+        <View style={styles.content}>
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.title}>select payment mode</Text>
+            <Text style={styles.subtitle}>
+              choose your preferred payment method to make payment.
+            </Text>
+          </View>
+  
+          {/* Payment Mode Toggle */}
+          <View style={styles.toggleContainer}>
+            <TouchableOpacity
+              style={[
+                styles.toggleButton,
+                selectedMode === 'pay' && styles.toggleButtonActive
+              ]}
+              onPress={() => setSelectedMode('pay')}
+            >
+              <Text style={[
+                styles.toggleText,
+                selectedMode === 'pay' && styles.toggleTextActive
+              ]}>
+                pay
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[
+                styles.toggleButton,
+                styles.toggleButtonCard,
+                selectedMode === 'card' && styles.toggleButtonCardActive
+              ]}
+              onPress={() => setSelectedMode('card')}
+            >
+              <Text style={styles.toggleTextCard}>card</Text>
+            </TouchableOpacity>
+          </View>
+  
+          {/* Card Section */}
+          <View style={styles.cardSection}>
+            <Text style={styles.cardSectionTitle}>YOUR DIGITAL DEBIT CARD</Text>
+            
+            <View style={styles.cardContainer}>
+              {/* Card */}
+              <View style={styles.card}>
+                <View style={styles.cardHeader}>
+                  <Text style={styles.yoloText}>YOLO</Text>
+                  <View style={styles.yesBankContainer}>
+                    <Text style={styles.yesBankText}>YES</Text>
+                    <Text style={styles.bankText}>BANK</Text>
+                  </View>
+                </View>
+                
+                <View style={styles.cardBody}>
+                  <View style={styles.cardLeft}>
+                    <View style={styles.profileImage}>
+                      <Image
+                        source={{ uri: 'https://via.placeholder.com/50x50' }}
+                        style={styles.profilePic}
+                      />
+                    </View>
+                    
+                    <View style={styles.cardNumbers}>
+                      <Text style={styles.cardNumber}>8124</Text>
+                      <Text style={styles.cardNumber}>4212</Text>
+                      <Text style={styles.cardNumber}>3456</Text>
+                      <Text style={styles.cardNumber}>7890</Text>
+                    </View>
+                  </View>
+                  
+                  <View style={styles.cardRight}>
+                    <View style={styles.cardDetails}>
+                      <Text style={styles.expiryLabel}>expiry</Text>
+                      <Text style={styles.expiryDate}>01/28</Text>
+                      
+                      <View style={styles.cvvContainer}>
+                        <Text style={styles.cvvLabel}>cvv</Text>
+                        <View style={styles.cvvRow}>
+                          <Text style={styles.cvvText}>
+                            {showCVV ? '789' : '***'}
+                          </Text>
+                          <TouchableOpacity onPress={() => setShowCVV(!showCVV)}>
+                            <Ionicons
+                              name={showCVV ? 'eye-off' : 'eye'}
+                              size={16}
+                              color="#ff4444"
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                
+                <TouchableOpacity style={styles.copyButton}>
+                  <Ionicons name="copy-outline" size={16} color="#ff4444" />
+                  <Text style={styles.copyText}>copy details</Text>
+                </TouchableOpacity>
+                
+                <View style={styles.cardFooter}>
+                  <Text style={styles.rupayText}>RuPay</Text>
+                  <Text style={styles.prepaidText}>PREPAID</Text>
+                </View>
+              </View>
+              
+              <TouchableOpacity
+                style={styles.freezeButton}
+                onPress={() => setIsFrozen(!isFrozen)}
+              >
+                <Ionicons name="snow" size={24} color="white" />
+                <Text style={styles.freezeText}>freeze</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  export default YoloPlay;
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#000',
+    },
+    statusBar: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      paddingVertical: 8,
+    },
+    timeText: {
+      color: 'white',
+      fontSize: 17,
+      fontWeight: '600',
+    },
+    statusIcons: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+    },
+    signalBars: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      gap: 2,
+    },
+    bar: {
+      width: 3,
+      backgroundColor: 'white',
+      borderRadius: 1,
+    },
+    battery: {
+      width: 24,
+      height: 12,
+      backgroundColor: 'white',
+      borderRadius: 2,
+      borderWidth: 1,
+      borderColor: 'white',
+    },
+    content: {
+      flex: 1,
+      paddingHorizontal: 20,
+    },
+    header: {
+      marginTop: 40,
+      marginBottom: 40,
+    },
+    title: {
+      fontSize: 32,
+      color: 'white',
+      fontWeight: '300',
+      marginBottom: 12,
+    },
+    subtitle: {
+      fontSize: 16,
+      color: '#888',
+      lineHeight: 24,
+    },
+    toggleContainer: {
+      flexDirection: 'row',
+      marginBottom: 60,
+    },
+    toggleButton: {
+      paddingHorizontal: 32,
+      paddingVertical: 12,
+      borderRadius: 25,
+      borderWidth: 2,
+      borderColor: '#444',
+      marginRight: 16,
+    },
+    toggleButtonActive: {
+      backgroundColor: 'white',
+      borderColor: 'white',
+    },
+    toggleButtonCard: {
+      borderColor: '#444',
+    },
+    toggleButtonCardActive: {
+      backgroundColor: '#ff4444',
+      borderColor: '#ff4444',
+    },
+    toggleText: {
+      color: 'white',
+      fontSize: 16,
+    },
+    toggleTextActive: {
+      color: 'black',
+    },
+    toggleTextCard: {
+      color: '#ff4444',
+      fontSize: 16,
+    },
+    cardSection: {
+      flex: 1,
+    },
+    cardSectionTitle: {
+      color: '#666',
+      fontSize: 12,
+      fontWeight: '500',
+      marginBottom: 24,
+      letterSpacing: 1,
+    },
+    cardContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    card: {
+      backgroundColor: '#1a1a1a',
+      borderRadius: 16,
+      padding: 20,
+      flex: 1,
+      marginRight: 20,
+    },
+    cardHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    yoloText: {
+      color: '#ff4444',
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+    yesBankContainer: {
+      backgroundColor: '#4a90e2',
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 4,
+    },
+    yesBankText: {
+      color: 'white',
+      fontSize: 10,
+      fontWeight: 'bold',
+    },
+    bankText: {
+      color: 'white',
+      fontSize: 8,
+      textAlign: 'center',
+    },
+    cardBody: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 20,
+    },
+    cardLeft: {
+      flex: 1,
+    },
+    profileImage: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: '#333',
+      marginBottom: 16,
+      overflow: 'hidden',
+    },
+    profilePic: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+    },
+    cardNumbers: {
+      gap: 8,
+    },
+    cardNumber: {
+      color: 'white',
+      fontSize: 18,
+      fontWeight: '500',
+    },
+    cardRight: {
+      alignItems: 'flex-end',
+    },
+    cardDetails: {
+      alignItems: 'flex-end',
+    },
+    expiryLabel: {
+      color: '#888',
+      fontSize: 12,
+      marginBottom: 4,
+    },
+    expiryDate: {
+      color: 'white',
+      fontSize: 16,
+      marginBottom: 16,
+    },
+    cvvContainer: {
+      alignItems: 'flex-end',
+    },
+    cvvLabel: {
+      color: '#888',
+      fontSize: 12,
+      marginBottom: 4,
+    },
+    cvvRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    cvvText: {
+      color: 'white',
+      fontSize: 16,
+    },
+    copyButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      marginBottom: 20,
+    },
+    copyText: {
+      color: '#ff4444',
+      fontSize: 14,
+    },
+    cardFooter: {
+      alignItems: 'center',
+    },
+    rupayText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+    },
+    prepaidText: {
+      color: '#888',
+      fontSize: 12,
+      fontWeight: '500',
+    },
+    freezeButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: '#1a1a1a',
+      gap: 8,
+    },
+    freezeText: {
+      color: 'white',
+      fontSize: 12,
+    },
+    bottomNav: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      paddingVertical: 20,
+      paddingHorizontal: 20,
+      borderTopWidth: 1,
+      borderTopColor: '#333',
+    },
+    navItem: {
+      alignItems: 'center',
+      gap: 4,
+    },
+    navIconActive: {
+      backgroundColor: '#333',
+      borderRadius: 20,
+      padding: 8,
+    },
+    navText: {
+      color: '#666',
+      fontSize: 12,
+    },
+    navTextActive: {
+      color: 'white',
+      fontSize: 12,
+    },
+  });
